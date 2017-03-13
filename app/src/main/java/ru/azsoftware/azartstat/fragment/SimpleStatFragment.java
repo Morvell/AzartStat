@@ -12,7 +12,7 @@ import ru.azsoftware.azartstat.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SimpleStatFragment extends Fragment {
+public class SimpleStatFragment extends Fragment  {
 
 
     public SimpleStatFragment() {

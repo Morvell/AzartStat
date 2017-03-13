@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -134,7 +133,12 @@ public class MainActivity extends AppCompatActivity
 
             Intent intent = new Intent(MainActivity.this, StatisticActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_new) {
+            Intent intent = new Intent(MainActivity.this, StatisticActivity.class);
+            startActivity(intent);
+
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
