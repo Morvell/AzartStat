@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import ru.azsoftware.azartstat.fragment.AboutProgramFragment;
 import ru.azsoftware.azartstat.fragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -23,7 +24,8 @@ public class MainActivity extends AppCompatActivity
 
 
     MainFragment mainFragment;
-    FragmentTransaction ftrans;
+    AboutProgramFragment aboutProgramFragment;
+
 
 
     @Override
@@ -35,9 +37,9 @@ public class MainActivity extends AppCompatActivity
 
 
         mainFragment = new MainFragment();
+        aboutProgramFragment = new AboutProgramFragment();
 
-        ftrans = getFragmentManager().beginTransaction();
-        ftrans.replace(R.id.container, mainFragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, mainFragment).commit();
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -101,15 +103,15 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
 
-
+            getFragmentManager().beginTransaction().replace(R.id.container, mainFragment).commit();
 
         } else if (id == R.id.nav_statistic) {
 
             Intent intent = new Intent(MainActivity.this, StatisticActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_new) {
-            Intent intent = new Intent(MainActivity.this, StatisticActivity.class);
-            startActivity(intent);
+        } else if (id == R.id.nav_about_program) {
+
+            getFragmentManager().beginTransaction().replace(R.id.container, aboutProgramFragment).commit();
 
         }
 
