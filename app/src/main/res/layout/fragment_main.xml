@@ -64,4 +64,13 @@
         android:layout_below="@+id/editTextDate"
         android:layout_alignStart="@+id/textView3" />
 
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:text="Внести данные "
+        android:layout_below="@+id/editTextSum"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
