@@ -22,11 +22,8 @@ import ru.azsoftware.azartstat.fragment.MainFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
     MainFragment mainFragment;
     AboutProgramFragment aboutProgramFragment;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +32,10 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         mainFragment = new MainFragment();
         aboutProgramFragment = new AboutProgramFragment();
 
         getFragmentManager().beginTransaction().replace(R.id.container, mainFragment).commit();
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -99,8 +85,6 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
-
         if (id == R.id.nav_home) {
 
             getFragmentManager().beginTransaction().replace(R.id.container, mainFragment).commit();
@@ -109,10 +93,10 @@ public class MainActivity extends AppCompatActivity
 
             Intent intent = new Intent(MainActivity.this, StatisticActivity.class);
             startActivity(intent);
+
         } else if (id == R.id.nav_about_program) {
 
             getFragmentManager().beginTransaction().replace(R.id.container, aboutProgramFragment).commit();
-
         }
 
 
@@ -120,7 +104,4 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
 }
