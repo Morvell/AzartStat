@@ -1,9 +1,11 @@
 package ru.azsoftware.azartstat;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,17 +15,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import ru.azsoftware.azartstat.fragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    EditText editTextDate;
-    Button buttonToday, buttonYesterday;
+
+    MainFragment mainFragment;
+    FragmentTransaction ftrans;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,43 +33,12 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        editTextDate = (EditText) findViewById(R.id.editTextDate);
-        buttonToday = (Button) findViewById(R.id.buttonToday);
-        buttonYesterday = (Button) findViewById(R.id.buttonYesterday);
 
-        buttonToday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar date = Calendar.getInstance();
-                date.add(Calendar.DATE,0);
+        mainFragment = new MainFragment();
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
-                String dateString = sdf.format(date.getTimeInMillis());
-                editTextDate.setText(dateString);
-            }
-        });
+        ftrans = getFragmentManager().beginTransaction();
+        ftrans.replace(R.id.container, mainFragment).commit();
 
-        buttonYesterday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar date = Calendar.getInstance();
-                date.add(Calendar.DATE,-1);
-
-                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
-                String dateString = sdf.format(date.getTimeInMillis());
-                editTextDate.setText(dateString);
-            }
-        });
-
-        editTextDate.setSelection(editTextDate.length());
-
-        //long date = System.currentTimeMillis();
-        Calendar date = Calendar.getInstance();
-        date.add(Calendar.DATE,0);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
-        String dateString = sdf.format(date.getTimeInMillis());
-        editTextDate.setText(dateString);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -127,8 +97,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
+
         if (id == R.id.nav_home) {
-            // Handle the camera action
+
+
+
         } else if (id == R.id.nav_statistic) {
 
             Intent intent = new Intent(MainActivity.this, StatisticActivity.class);
