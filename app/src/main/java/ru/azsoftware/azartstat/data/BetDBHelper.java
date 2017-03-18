@@ -22,8 +22,8 @@ public class BetDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Строка для создания таблицы
         String SQL_CREATE_GUESTS_TABLE = "CREATE TABLE " + BetEntry.TABLE_NAME + " ("
-                + BetEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + BetEntry.COLUMN_DATE + " TEXT NOT NULL, "
+
+                + BetEntry.COLUMN_DATE + " TEXT PRIMARY KEY NOT NULL, "
                 + BetEntry.COLUMN_PROFIT + " INTEGER NOT NULL DEFAULT 0);";
 
         // Запускаем создание таблицы
