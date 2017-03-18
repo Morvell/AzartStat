@@ -103,6 +103,7 @@ public class MainFragment extends Fragment {
         // Gets the database in write mode
         BetDBHelper betDBHelper = new BetDBHelper(getActivity().getApplicationContext());
         SQLiteDatabase db = betDBHelper.getWritableDatabase();
+
         // Создаем объект ContentValues, где имена столбцов ключи,
         // а информация о госте является значениями ключей
         ContentValues values = new ContentValues();
