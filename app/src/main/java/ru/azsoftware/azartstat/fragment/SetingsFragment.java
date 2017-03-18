@@ -67,7 +67,7 @@ public class SetingsFragment extends Fragment {
 
         // Зададим условие для выборки - список столбцов
         String[] projection = {
-                BetContract.BetEntry._ID,
+
                 BetContract.BetEntry.COLUMN_DATE,
                 BetContract.BetEntry.COLUMN_PROFIT };
 
@@ -86,13 +86,13 @@ public class SetingsFragment extends Fragment {
 
         try {
             displayTextView.setText("Таблица содержит " + cursor.getCount() + " данные.\n\n");
-            displayTextView.append(BetContract.BetEntry._ID + " - " +
+            displayTextView.append(
                     BetContract.BetEntry.COLUMN_DATE + " - " +
 
                     BetContract.BetEntry.COLUMN_PROFIT + "\n");
 
             // Узнаем индекс каждого столбца
-            int idColumnIndex = cursor.getColumnIndex(BetContract.BetEntry._ID);
+
             int dateColumnIndex = cursor.getColumnIndex(BetContract.BetEntry.COLUMN_DATE);
             int profitColumnIndex = cursor.getColumnIndex(BetContract.BetEntry.COLUMN_PROFIT);
 
@@ -100,12 +100,12 @@ public class SetingsFragment extends Fragment {
             // Проходим через все ряды
             while (cursor.moveToNext()) {
                 // Используем индекс для получения строки или числа
-                int currentID = cursor.getInt(idColumnIndex);
+
                 String currentName = cursor.getString(dateColumnIndex);
                 String currentCity = cursor.getString(profitColumnIndex);
 
                 // Выводим значения каждого столбца
-                displayTextView.append(("\n" + currentID + " - " +
+                displayTextView.append(("\n" +
                         currentName + " - " +
                         currentCity));
             }
