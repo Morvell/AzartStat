@@ -13,11 +13,13 @@ import android.view.MenuItem;
 
 import ru.azsoftware.azartstat.fragment.AboutProgramFragment;
 import ru.azsoftware.azartstat.fragment.MainFragment;
+import ru.azsoftware.azartstat.fragment.SetingsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     MainFragment mainFragment;
+    SetingsFragment setingsFragment;
     AboutProgramFragment aboutProgramFragment;
 
     @Override
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity
 
         mainFragment = new MainFragment();
         aboutProgramFragment = new AboutProgramFragment();
+        setingsFragment = new SetingsFragment();
 
         getFragmentManager().beginTransaction().replace(R.id.container, mainFragment).commit();
 
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            getFragmentManager().beginTransaction().replace(R.id.container, setingsFragment).commit();
         }
 
         return super.onOptionsItemSelected(item);
