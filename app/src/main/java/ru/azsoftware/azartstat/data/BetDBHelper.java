@@ -24,7 +24,8 @@ public class BetDBHelper extends SQLiteOpenHelper {
         String SQL_CREATE_GUESTS_TABLE = "CREATE TABLE " + BetEntry.TABLE_NAME + " ("
 
                 + BetEntry.COLUMN_DATE + " TEXT PRIMARY KEY NOT NULL, "
-                + BetEntry.COLUMN_PROFIT + " INTEGER NOT NULL DEFAULT 0);";
+                + BetEntry.COLUMN_PROFIT + " INTEGER NOT NULL DEFAULT 0, "
+                + BetEntry.COLUMN_BANK + " INTEGER NOT NULL DEFAULT 0);";
 
         // Запускаем создание таблицы
         db.execSQL(SQL_CREATE_GUESTS_TABLE);

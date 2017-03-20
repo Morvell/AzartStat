@@ -4,8 +4,9 @@ package ru.azsoftware.azartstat.fragment;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.app.DialogFragment;
 import android.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,19 +107,26 @@ public class MainFragment extends Fragment {
 
         // Создаем объект ContentValues, где имена столбцов ключи,
         // а информация о госте является значениями ключей
+        String date = editTextDate.getText().toString();
+        int profit = Integer.parseInt(editTextSum.getText().toString());
         ContentValues values = new ContentValues();
-        values.put(BetEntry.COLUMN_DATE, editTextDate.getText().toString());
-        values.put(BetEntry.COLUMN_PROFIT, Integer.parseInt(editTextSum.getText().toString()));
+        values.put(BetEntry.COLUMN_DATE, date);
+        values.put(BetEntry.COLUMN_PROFIT, profit);
 
 
         long newRowId = db.insert(BetEntry.TABLE_NAME, null, values);
 
         if (newRowId == -1) {
-            // Если ID  -1, значит произошла ошибка
-            Toast.makeText(getActivity().getApplicationContext(), "Ошибка при заведении данных", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), "Данные за "+ date + " уже существуют" , Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Данные заведёны под номером: " + newRowId, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(), "Данные за "+ date + " заведёны" , Toast.LENGTH_SHORT).show();
         }
     }
 
-}
+
+    }
+
+
+
+
+
