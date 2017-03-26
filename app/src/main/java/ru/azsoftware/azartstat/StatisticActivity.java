@@ -59,8 +59,10 @@ public class StatisticActivity extends AppCompatActivity
         mSectionsPagerAdapter = new StatisticActivity.SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container2);
+        CustomViewPager mViewPager = (CustomViewPager) findViewById(R.id.container2);
+        mViewPager.setPagingEnabled(false);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
