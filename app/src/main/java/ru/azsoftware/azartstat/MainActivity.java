@@ -2,6 +2,7 @@ package ru.azsoftware.azartstat;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity
     Button buttonToday, buttonYesterday, buttonSave, buttonNext;
     TextView textViewBank;
 
+    SQLiteDatabase db;
+
     private SharedPreferences mSettings;
 
     public static final String APP_PREFERENCES = "mysettings";
@@ -58,13 +61,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
-        builder.setTitle("AppCompatDialog");
-        builder.setMessage("Lorem ipsum dolor...");
-        builder.setPositiveButton("OK", null);
-        builder.setNegativeButton("Cancel", null);
-        builder.setNeutralButton("Maybee", null);
-        builder.show();
+        BetDBHelper betDBHelper = new BetDBHelper(this);
+        db = betDBHelper.getWritableDatabase();
+
+
 
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -199,8 +199,7 @@ public class MainActivity extends AppCompatActivity
     private void insertDate() {
 
         // Gets the database in write mode
-        BetDBHelper betDBHelper = new BetDBHelper(this);
-        SQLiteDatabase db = betDBHelper.getWritableDatabase();
+
 
         // Создаем объект ContentValues, где имена столбцов ключи,
         // а информация о госте является значениями ключей
@@ -217,6 +216,7 @@ public class MainActivity extends AppCompatActivity
 
         if (newRowId == -1) {
             Toast.makeText(this, "Данные за " + date + " уже существуют", Toast.LENGTH_SHORT).show();
+            MyAlertDialog();
 
         } else {
             Toast.makeText(this, "Данные за " + date + " заведёны", Toast.LENGTH_SHORT).show();
@@ -225,4 +225,40 @@ public class MainActivity extends AppCompatActivity
             editor.apply();
         }
     }
+
+    private void MyAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+        builder.setMessage("Данные за этот день уже были заведены ранее. Заменить данные?");
+        builder.setPositiveButton("Да", UpdateDB);
+        builder.setNegativeButton("Нет", null);
+        builder.setNeutralButton("Суммировать", null);
+        builder.show();
+    }
+
+    DialogInterface.OnClickListener UpdateDB = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            ContentValues values = new ContentValues();
+            values.put(BetContract.BetEntry.COLUMN_PROFIT, editTextProfit.getText().toString());
+            values.put(BetContract.BetEntry.COLUMN_BANK, editTextBank.getText().toString());
+
+            db.update(BetContract.BetEntry.TABLE_NAME,
+                    values,
+                    BetContract.BetEntry.COLUMN_DATE + "= ?", new String[]{editTextDate.getText().toString()});
+
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putInt(APP_PREFERENCES_BANK,Integer.valueOf(editTextBank.getText().toString()));
+            editor.apply();
+
+        }
+    };
+
+    DialogInterface.OnClickListener ChangeDB = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+        }
+    };
+
 }
+
