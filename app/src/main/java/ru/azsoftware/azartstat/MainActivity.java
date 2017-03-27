@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -231,7 +232,7 @@ public class MainActivity extends AppCompatActivity
         builder.setMessage("Данные за этот день уже были заведены ранее. Заменить данные?");
         builder.setPositiveButton("Да", UpdateDB);
         builder.setNegativeButton("Нет", null);
-        builder.setNeutralButton("Суммировать", null);
+        builder.setNeutralButton("Суммировать", ChangeDB);
         builder.show();
     }
 
@@ -239,8 +240,8 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface dialog, int which) {
             ContentValues values = new ContentValues();
-            values.put(BetContract.BetEntry.COLUMN_PROFIT, editTextProfit.getText().toString());
-            values.put(BetContract.BetEntry.COLUMN_BANK, editTextBank.getText().toString());
+            values.put(BetContract.BetEntry.COLUMN_PROFIT, Integer.valueOf(editTextProfit.getText().toString()));
+            values.put(BetContract.BetEntry.COLUMN_BANK, Integer.valueOf(editTextBank.getText().toString()));
 
             db.update(BetContract.BetEntry.TABLE_NAME,
                     values,
@@ -256,6 +257,37 @@ public class MainActivity extends AppCompatActivity
     DialogInterface.OnClickListener ChangeDB = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
+            ContentValues values = new ContentValues();
+            String query = "SELECT " + BetContract.BetEntry.COLUMN_PROFIT+", "+ BetContract.BetEntry.COLUMN_BANK
+                    +" FROM " + BetContract.BetEntry.TABLE_NAME
+                    +" WHERE "+ BetContract.BetEntry.COLUMN_DATE+"="+editTextDate.getText().toString();
+            Cursor cursor = db.rawQuery(query,null);
+            int profit =0, bank = 0;
+            while (cursor.moveToNext()) {
+                profit = cursor.getInt(cursor
+                        .getColumnIndex(BetContract.BetEntry.COLUMN_PROFIT));
+                bank = cursor.getInt(cursor
+                        .getColumnIndex(BetContract.BetEntry.COLUMN_BANK));
+
+            }
+
+            values.put(BetContract.BetEntry.COLUMN_PROFIT, Integer.valueOf(editTextProfit.getText().toString()) + profit);
+            values.put(BetContract.BetEntry.COLUMN_BANK, bank + profit);
+
+            db.update(BetContract.BetEntry.TABLE_NAME,
+                    values,
+                    BetContract.BetEntry.COLUMN_DATE + "= ?", new String[]{editTextDate.getText().toString()});
+
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putInt(APP_PREFERENCES_BANK, bank + profit);
+            editor.apply();
+            cursor.close();
+
+
+
+
+
+
 
         }
     };
