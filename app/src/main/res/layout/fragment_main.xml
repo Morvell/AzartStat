@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ru.azsoftware.azartstat.fragment.MainFragment">
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textAlignment="center"
+        android:ems="10"
+        android:inputType="date"
+        android:layout_below="@+id/textView3"
+        android:layout_alignStart="@+id/editTextSum" />
+
+    <Button
+        android:id="@+id/buttonToday"
+        android:layout_width="70dp"
+        android:layout_height="35dp"
+        android:text="Сегодня"
+        android:textSize="10dp"
+        android:onClick="setButtonToday"
+        android:layout_below="@+id/editTextDate"
+        android:layout_alignEnd="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="Введите данные за день" />
+
+    <EditText
+        android:id="@+id/editTextSum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:ems="10"
+        android:textAlignment="center"
+        android:inputType="numberDecimal"
+        android:layout_below="@+id/editTextDate"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editTextSum"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="58dp"
+        android:text="Сумма" />
+
+    <Button
+        android:id="@+id/buttonYesterday"
+        android:layout_width="70dp"
+        android:layout_height="35dp"
+        android:text="Вчера"
+        android:textSize="10dp"
+        android:onClick="setButtonYesterday"
+        android:layout_below="@+id/editTextDate"
+        android:layout_alignStart="@+id/textView3" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:text="Внести данные "
+        android:layout_below="@+id/editTextSum"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
