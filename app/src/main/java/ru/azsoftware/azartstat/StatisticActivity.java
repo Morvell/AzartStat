@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import ru.azsoftware.azartstat.fragment.GrafStatFragment;
 import ru.azsoftware.azartstat.fragment.SimpleStatFragment;
 
 public class StatisticActivity extends AppCompatActivity
@@ -119,7 +120,7 @@ public class StatisticActivity extends AppCompatActivity
                 case 0:
                     return new SimpleStatFragment();
                 case 1:
-                    return new SimpleStatFragment();
+                    return new GrafStatFragment();
                 default:
                     return null;
             }
