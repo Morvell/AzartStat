@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity
         int bank = Integer.parseInt(editTextBank.getText().toString());
         ContentValues values = new ContentValues();
         values.put(BetContract.BetEntry.COLUMN_DATE, date);
-        values.put(BetContract.BetEntry.COLUMN_BANK,bank);
+        values.put(BetContract.BetEntry.COLUMN_BANK, bank);
         values.put(BetContract.BetEntry.COLUMN_PROFIT, profit);
 
 
