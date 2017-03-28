@@ -55,7 +55,7 @@ public class SimpleStatFragment extends Fragment  {
     }
     public String[] DateGenerat() {
 
-        String query = "SELECT " + BetContract.BetEntry.COLUMN_DATE+", "+ BetContract.BetEntry.COLUMN_BANK
+        String query = "SELECT " + BetContract.BetEntry.COLUMN_DATE+", "+ BetContract.BetEntry.COLUMN_BANK+", "+ BetContract.BetEntry.COLUMN_PROFIT
                 +" FROM " + BetContract.BetEntry.TABLE_NAME;
 
         Cursor cursor = db.rawQuery(query,null);
@@ -72,7 +72,8 @@ public class SimpleStatFragment extends Fragment  {
         while (cursor.moveToNext()) {
             date = cursor.getString(cursor
                     .getColumnIndex(BetContract.BetEntry.COLUMN_DATE));
-
+            profit = cursor.getInt(cursor
+                    .getColumnIndex(BetContract.BetEntry.COLUMN_PROFIT));
             bank = cursor.getInt(cursor
                     .getColumnIndex(BetContract.BetEntry.COLUMN_BANK));
 
