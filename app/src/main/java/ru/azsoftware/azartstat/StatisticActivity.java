@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import ru.azsoftware.azartstat.fragment.GrafStatFragment;
 import ru.azsoftware.azartstat.fragment.SimpleStatFragment;
@@ -101,6 +102,8 @@ public class StatisticActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             Intent intent = new Intent(StatisticActivity.this, MainActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_about_program){
+            Toast.makeText(this,"Находится в разработке",Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

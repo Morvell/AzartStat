@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_about_program) {
 
-
+            Toast.makeText(this,"Находится в разработке",Toast.LENGTH_SHORT).show();
         }
 
 
