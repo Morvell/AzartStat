@@ -87,7 +87,7 @@ public class StatisticActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Toast.makeText(getApplication(),"В разработке",Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
