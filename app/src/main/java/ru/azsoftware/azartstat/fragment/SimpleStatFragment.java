@@ -56,7 +56,7 @@ public class SimpleStatFragment extends Fragment  {
     public String[] DateGenerat() {
 
         String query = "SELECT " + BetContract.BetEntry.COLUMN_DATE+", "+ BetContract.BetEntry.COLUMN_BANK+", "+ BetContract.BetEntry.COLUMN_PROFIT
-                +" FROM " + BetContract.BetEntry.TABLE_NAME;
+                +" FROM " + BetContract.BetEntry.TABLE_NAME +" ORDER BY " + BetContract.BetEntry.COLUMN_DATE + " DESC";
 
         Cursor cursor = db.rawQuery(query,null);
         int bank = 0;

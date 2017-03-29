@@ -80,7 +80,7 @@ public class GrafStatFragment extends Fragment {
     public DataPoint[] DataPointGenerat() throws ParseException {
 
         String query = "SELECT " + BetContract.BetEntry.COLUMN_DATE+", "+ BetContract.BetEntry.COLUMN_BANK
-                +" FROM " + BetContract.BetEntry.TABLE_NAME;
+                +" FROM " + BetContract.BetEntry.TABLE_NAME + " ORDER BY " + BetContract.BetEntry.COLUMN_DATE + " ASC";
 
         Cursor cursor = db.rawQuery(query,null);
         int bank = 0;
