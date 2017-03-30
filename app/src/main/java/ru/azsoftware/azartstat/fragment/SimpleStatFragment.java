@@ -44,10 +44,10 @@ public class SimpleStatFragment extends Fragment  {
         db = betDBHelper.getWritableDatabase();
 
         multiline = (TextView) view.findViewById(R.id.multiline);
-
-        for (String i:DateGenerat())
+        String [] date = DateGenerat();
+        for (int i = 0 , j = 1; i<date.length;i++,j++)
         {
-            multiline.append(i);
+            multiline.append(j +") "+ date[i]);
         }
 
 
