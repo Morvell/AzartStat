@@ -30,14 +30,14 @@ import java.util.Calendar;
 
 import ru.azsoftware.azartstat.data.BetContract;
 import ru.azsoftware.azartstat.data.BetDBHelper;
+import ru.azsoftware.azartstat.fragment.AboutProgramFragment;
 import ru.azsoftware.azartstat.fragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    Fragment fragment = null;
-    Class fragmentClass = null;
+
 
 
     @Override
@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Fragment fragment = null;
+        Class fragmentClass = null;
 
         fragmentClass = MainFragment.class;
 
@@ -112,6 +115,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Fragment fragment = null;
+        Class fragmentClass = null;
+
         if (id == R.id.nav_home) {
 
 
@@ -122,9 +128,18 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_about_program) {
 
-            Toast.makeText(this,"Находится в разработке",Toast.LENGTH_SHORT).show();
+            fragmentClass = AboutProgramFragment.class;
         }
 
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.containerForFragment, fragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
