@@ -31,7 +31,9 @@ import java.util.Calendar;
 import ru.azsoftware.azartstat.data.BetContract;
 import ru.azsoftware.azartstat.data.BetDBHelper;
 import ru.azsoftware.azartstat.fragment.AboutProgramFragment;
+import ru.azsoftware.azartstat.fragment.GrafStatFragment;
 import ru.azsoftware.azartstat.fragment.MainFragment;
+import ru.azsoftware.azartstat.fragment.SimpleStatFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -120,15 +122,20 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
 
-
-        } else if (id == R.id.nav_statistic) {
-
-            Intent intent = new Intent(MainActivity.this, StatisticActivity.class);
-            startActivity(intent);
+            fragmentClass = MainFragment.class;
 
         } else if (id == R.id.nav_about_program) {
 
             fragmentClass = AboutProgramFragment.class;
+
+        } else if (id == R.id.nav_simple_statistic){
+
+            fragmentClass = SimpleStatFragment.class;
+
+        } else if (id == R.id.nav_graf_statistic){
+
+            fragmentClass = GrafStatFragment.class;
+
         }
 
 
