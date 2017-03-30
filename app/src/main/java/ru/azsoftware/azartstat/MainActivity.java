@@ -89,12 +89,8 @@ public class MainActivity extends AppCompatActivity
                 try{ bank = mSettings.getInt(APP_PREFERENCES_BANK,0);}catch (Exception e) {}
                 bank += Integer.valueOf(editTextProfit.getText().toString());
                 editTextBank.setText(String.valueOf(bank));
-
-
             }
         });
-
-
 
         buttonToday.setOnClickListener(new View.OnClickListener() {
             @Override

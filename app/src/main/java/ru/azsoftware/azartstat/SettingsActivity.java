@@ -63,7 +63,7 @@ public class SettingsActivity extends AppCompatActivity {
                 BetDBHelper betDBHelper = new BetDBHelper(getApplicationContext());
                 SQLiteDatabase db = betDBHelper.getWritableDatabase();
                 int deleatRow = db.delete(BetContract.BetEntry.TABLE_NAME, null,null);
-                Toast.makeText(getApplication(),"Данные удалены" + deleatRow, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(),"Данные удалены в количестве: " + deleatRow + "шт.", Toast.LENGTH_SHORT).show();
             }
         });
 
