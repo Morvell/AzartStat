@@ -48,7 +48,6 @@
         android:layout_below="@+id/textViewAZSoftware"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="39dp"
-        android:id="@+id/textView5"
         android:textAlignment="center" />
 
 </RelativeLayout>

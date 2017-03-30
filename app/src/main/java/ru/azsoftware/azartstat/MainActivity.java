@@ -38,10 +38,6 @@ import ru.azsoftware.azartstat.fragment.SimpleStatFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +120,7 @@ public class MainActivity extends AppCompatActivity
 
             fragmentClass = MainFragment.class;
 
+
         } else if (id == R.id.nav_about_program) {
 
             fragmentClass = AboutProgramFragment.class;
@@ -147,6 +144,10 @@ public class MainActivity extends AppCompatActivity
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.containerForFragment, fragment).commit();
+
+        item.setChecked(true);
+        // Выводим выбранный пункт в заголовке
+        setTitle(item.getTitle());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

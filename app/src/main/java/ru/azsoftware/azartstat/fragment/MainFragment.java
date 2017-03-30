@@ -58,7 +58,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.fragment_main, container, false);
+        final View view =  inflater.inflate(R.layout.fragment_main, container, false);
 
         BetDBHelper betDBHelper = new BetDBHelper(getActivity());
         db = betDBHelper.getWritableDatabase();
@@ -83,6 +83,8 @@ public class MainFragment extends Fragment {
 
                 textViewBank.setVisibility(View.VISIBLE);
                 editTextBank.setVisibility(View.VISIBLE);
+                buttonSave.setVisibility(View.VISIBLE);
+                buttonNext.setVisibility(View.INVISIBLE);
                 int bank = 0;
                 try{ bank = mSettings.getInt(APP_PREFERENCES_BANK,0);}catch (Exception e) {}
                 bank += Integer.valueOf(editTextProfit.getText().toString());
@@ -188,6 +190,7 @@ public class MainFragment extends Fragment {
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putInt(APP_PREFERENCES_BANK,Integer.valueOf(editTextBank.getText().toString()));
             editor.apply();
+            Toast.makeText(getActivity(), "Данные заменены.", Toast.LENGTH_SHORT).show();
 
         }
     };
@@ -220,6 +223,7 @@ public class MainFragment extends Fragment {
             editor.putInt(APP_PREFERENCES_BANK, bank + profit);
             editor.apply();
             cursor.close();
+            Toast.makeText(getActivity(), "Данные суммированы.", Toast.LENGTH_SHORT).show();
         }
     };
 
