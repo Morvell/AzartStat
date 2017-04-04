@@ -65,10 +65,10 @@ public class ListViewAdapter extends BaseAdapter{
 
             convertView=inflater.inflate(R.layout.colmn_row, null);
 
-            txtFirst=(TextView) convertView.findViewById(R.id.name);
-            txtSecond=(TextView) convertView.findViewById(R.id.gender);
-            txtThird=(TextView) convertView.findViewById(R.id.age);
-            txtFourth=(TextView) convertView.findViewById(R.id.status);
+            txtFirst=(TextView) convertView.findViewById(R.id.namber);
+            txtSecond=(TextView) convertView.findViewById(R.id.date);
+            txtThird=(TextView) convertView.findViewById(R.id.profit);
+            txtFourth=(TextView) convertView.findViewById(R.id.bank);
 
         }
 
