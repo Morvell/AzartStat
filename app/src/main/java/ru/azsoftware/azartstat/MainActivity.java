@@ -1,12 +1,6 @@
 package ru.azsoftware.azartstat;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,26 +8,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import ru.azsoftware.azartstat.data.BetContract;
-import ru.azsoftware.azartstat.data.BetDBHelper;
 import ru.azsoftware.azartstat.fragment.AboutProgramFragment;
 import ru.azsoftware.azartstat.fragment.GrafStatFragment;
+import ru.azsoftware.azartstat.fragment.ListFragment;
 import ru.azsoftware.azartstat.fragment.MainFragment;
-import ru.azsoftware.azartstat.fragment.SimpleStatFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -125,9 +108,9 @@ public class MainActivity extends AppCompatActivity
 
             fragmentClass = AboutProgramFragment.class;
 
-        } else if (id == R.id.nav_simple_statistic){
+        } else if (id == R.id.nav_all_data){
 
-            fragmentClass = SimpleStatFragment.class;
+            fragmentClass = ListFragment.class;
 
         } else if (id == R.id.nav_graf_statistic){
 

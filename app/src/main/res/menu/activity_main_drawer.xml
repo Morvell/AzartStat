@@ -7,9 +7,9 @@
             android:icon="@drawable/ic_add"
             android:title="Добаление данных"/>
         <item
-            android:id="@+id/nav_simple_statistic"
-            android:icon="@drawable/ic_statistic"
-            android:title="Простая статистика"/>
+            android:id="@+id/nav_all_data"
+            android:icon="@drawable/ic_all_data"
+            android:title="Данные"/>
         <item
             android:id="@+id/nav_graf_statistic"
             android:icon="@drawable/ic_statistic"
