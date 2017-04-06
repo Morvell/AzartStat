@@ -165,7 +165,12 @@ public class MainFragment extends Fragment {
         int profit = Integer.parseInt(editTextProfit.getText().toString());
         int bank = Integer.parseInt(editTextBank.getText().toString());
         ContentValues values = new ContentValues();
+        String day, month, age;
+        day = date.split("[.]")[0];
+        month = date.split("[.]")[1];
+        age = date.split("[.]")[2];
         values.put(BetContract.BetEntry.COLUMN_DATE, date);
+        values.put(BetContract.BetEntry.COLUMN_REVERT_DATE, age + "." + month + "." + day);
         values.put(BetContract.BetEntry.COLUMN_BANK, bank);
         values.put(BetContract.BetEntry.COLUMN_PROFIT, profit);
 
