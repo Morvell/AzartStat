@@ -25,16 +25,12 @@ import java.util.Calendar;
 import java.util.Objects;
 
 import ru.azsoftware.azartstat.R;
-import ru.azsoftware.azartstat.data.BetContract;
+import ru.azsoftware.azartstat.data.BetContract.BetEntry;
 import ru.azsoftware.azartstat.data.BetDBHelper;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MainFragment extends Fragment {
 
-
-    EditText editTextDate, editTextProfit, editTextBank;
+    EditText editTextDate, editTextBankOrProfitUp, editTextBankOrProfitDown;
     Button buttonToday, buttonYesterday, buttonSave, buttonNext;
     TextView textViewBankOrProfit;
     Spinner spinner;
@@ -46,14 +42,7 @@ public class MainFragment extends Fragment {
     public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_BANK = "bank";
 
-
-
-    public MainFragment() {
-        // Required empty public constructor
-    }
-
-
-
+    public MainFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,14 +53,11 @@ public class MainFragment extends Fragment {
         BetDBHelper betDBHelper = new BetDBHelper(getActivity());
         db = betDBHelper.getWritableDatabase();
 
-
-
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
-
         editTextDate = (EditText) view.findViewById(R.id.editTextDate);
-        editTextProfit = (EditText) view.findViewById(R.id.editTextSum);
-        editTextBank = (EditText) view.findViewById(R.id.editTextBank);
+        editTextBankOrProfitUp = (EditText) view.findViewById(R.id.editTextBankOrProfitUp);
+        editTextBankOrProfitDown = (EditText) view.findViewById(R.id.editTextBankOrProfitDown);
         buttonToday = (Button) view.findViewById(R.id.buttonToday);
         buttonYesterday = (Button) view.findViewById(R.id.buttonYesterday);
         buttonSave = (Button) view.findViewById(R.id.buttonSave);
@@ -84,7 +70,7 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
 
                 textViewBankOrProfit.setVisibility(View.VISIBLE);
-                editTextBank.setVisibility(View.VISIBLE);
+                editTextBankOrProfitDown.setVisibility(View.VISIBLE);
                 buttonSave.setVisibility(View.VISIBLE);
                 buttonNext.setVisibility(View.INVISIBLE);
 
@@ -95,15 +81,15 @@ public class MainFragment extends Fragment {
                     textViewBankOrProfit.setText("Банк");
                     int bank = 0;
                     try{ bank = mSettings.getInt(APP_PREFERENCES_BANK,0);}catch (Exception e) {}
-                    bank += Integer.valueOf(editTextProfit.getText().toString());
-                    editTextBank.setText(String.valueOf(bank));
+                    bank += Integer.valueOf(editTextBankOrProfitUp.getText().toString());
+                    editTextBankOrProfitDown.setText(String.valueOf(bank));
                 } else {
                     textViewBankOrProfit.setText("Прибыль");
                     int bank = 0;
                     int profit = 0;
                     try{ bank = mSettings.getInt(APP_PREFERENCES_BANK,0);}catch (Exception e) {}
-                    profit = Integer.valueOf(editTextProfit.getText().toString()) - bank;
-                    editTextBank.setText(String.valueOf(profit));
+                    profit = Integer.valueOf(editTextBankOrProfitUp.getText().toString()) - bank;
+                    editTextBankOrProfitDown.setText(String.valueOf(profit));
                 }
 
             }
@@ -126,7 +112,6 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 Calendar date = Calendar.getInstance();
                 date.add(Calendar.DATE, -1);
-
                 SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
                 String dateString = sdf.format(date.getTimeInMillis());
                 editTextDate.setText(dateString);
@@ -142,7 +127,6 @@ public class MainFragment extends Fragment {
 
         editTextDate.setSelection(editTextDate.length());
 
-        //long date = System.currentTimeMillis();
         Calendar date = Calendar.getInstance();
         date.add(Calendar.DATE, 0);
 
@@ -150,32 +134,28 @@ public class MainFragment extends Fragment {
         String dateString = sdf.format(date.getTimeInMillis());
         editTextDate.setText(dateString);
 
-
         return view;
     }
 
     private void insertDate() {
 
-        // Gets the database in write mode
-
-
-        // Создаем объект ContentValues, где имена столбцов ключи,
-        // а информация о госте является значениями ключей
         String date = editTextDate.getText().toString();
-        int profit = Integer.parseInt(editTextProfit.getText().toString());
-        int bank = Integer.parseInt(editTextBank.getText().toString());
+        int profit = Integer.parseInt(editTextBankOrProfitUp.getText().toString());
+        int bank = Integer.parseInt(editTextBankOrProfitDown.getText().toString());
         ContentValues values = new ContentValues();
         String day, month, age;
-        day = date.split("[.]")[0];
-        month = date.split("[.]")[1];
-        age = date.split("[.]")[2];
-        values.put(BetContract.BetEntry.COLUMN_DATE, date);
-        values.put(BetContract.BetEntry.COLUMN_REVERT_DATE, age + "." + month + "." + day);
-        values.put(BetContract.BetEntry.COLUMN_BANK, bank);
-        values.put(BetContract.BetEntry.COLUMN_PROFIT, profit);
+        String[] splitDate = date.split("[.]");
+        day = splitDate[0];
+        month = splitDate[1];
+        age = splitDate[2];
+        String revertDate = age + "." + month + "." + day;
 
+        values.put(BetEntry.COLUMN_DATE, date);
+        values.put(BetEntry.COLUMN_REVERT_DATE, revertDate);
+        values.put(BetEntry.COLUMN_BANK, bank);
+        values.put(BetEntry.COLUMN_PROFIT, profit);
 
-        long newRowId = db.insert(BetContract.BetEntry.TABLE_NAME, null, values);
+        long newRowId = db.insert(BetEntry.TABLE_NAME, null, values);
 
         if (newRowId == -1) {
             Toast.makeText(getActivity(), "Данные за " + date + " уже существуют", Toast.LENGTH_SHORT).show();
@@ -202,15 +182,15 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             ContentValues values = new ContentValues();
-            values.put(BetContract.BetEntry.COLUMN_PROFIT, Integer.valueOf(editTextProfit.getText().toString()));
-            values.put(BetContract.BetEntry.COLUMN_BANK, Integer.valueOf(editTextBank.getText().toString()));
+            values.put(BetEntry.COLUMN_PROFIT, Integer.valueOf(editTextBankOrProfitUp.getText().toString()));
+            values.put(BetEntry.COLUMN_BANK, Integer.valueOf(editTextBankOrProfitDown.getText().toString()));
 
-            db.update(BetContract.BetEntry.TABLE_NAME,
+            db.update(BetEntry.TABLE_NAME,
                     values,
-                    BetContract.BetEntry.COLUMN_DATE + "= ?", new String[]{editTextDate.getText().toString()});
+                    BetEntry.COLUMN_DATE + "= ?", new String[]{editTextDate.getText().toString()});
 
             SharedPreferences.Editor editor = mSettings.edit();
-            editor.putInt(APP_PREFERENCES_BANK,Integer.valueOf(editTextBank.getText().toString()));
+            editor.putInt(APP_PREFERENCES_BANK,Integer.valueOf(editTextBankOrProfitDown.getText().toString()));
             editor.apply();
             Toast.makeText(getActivity(), "Данные заменены.", Toast.LENGTH_SHORT).show();
 
@@ -221,25 +201,24 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             ContentValues values = new ContentValues();
-            String query = "SELECT " + BetContract.BetEntry.COLUMN_PROFIT+", "+ BetContract.BetEntry.COLUMN_BANK
-                    +" FROM " + BetContract.BetEntry.TABLE_NAME
-                    +" WHERE "+ BetContract.BetEntry.COLUMN_DATE+"="+editTextDate.getText().toString();
+            String query = "SELECT " + BetEntry.COLUMN_PROFIT+", "+ BetEntry.COLUMN_BANK
+                         +" FROM " + BetEntry.TABLE_NAME
+                         +" WHERE "+ BetEntry.COLUMN_DATE+"="+editTextDate.getText().toString();
             Cursor cursor = db.rawQuery(query,null);
             int profit =0, bank = 0;
             while (cursor.moveToNext()) {
                 profit = cursor.getInt(cursor
-                        .getColumnIndex(BetContract.BetEntry.COLUMN_PROFIT));
+                        .getColumnIndex(BetEntry.COLUMN_PROFIT));
                 bank = cursor.getInt(cursor
-                        .getColumnIndex(BetContract.BetEntry.COLUMN_BANK));
-
+                        .getColumnIndex(BetEntry.COLUMN_BANK));
             }
 
-            values.put(BetContract.BetEntry.COLUMN_PROFIT, Integer.valueOf(editTextProfit.getText().toString()) + profit);
-            values.put(BetContract.BetEntry.COLUMN_BANK, bank + profit);
+            values.put(BetEntry.COLUMN_PROFIT, Integer.valueOf(editTextBankOrProfitUp.getText().toString()) + profit);
+            values.put(BetEntry.COLUMN_BANK, bank + profit);
 
-            db.update(BetContract.BetEntry.TABLE_NAME,
+            db.update(BetEntry.TABLE_NAME,
                     values,
-                    BetContract.BetEntry.COLUMN_DATE + "= ?", new String[]{editTextDate.getText().toString()});
+                    BetEntry.COLUMN_DATE + "= ?", new String[]{editTextDate.getText().toString()});
 
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putInt(APP_PREFERENCES_BANK, bank + profit);
@@ -248,7 +227,6 @@ public class MainFragment extends Fragment {
             Toast.makeText(getActivity(), "Данные суммированы.", Toast.LENGTH_SHORT).show();
         }
     };
-
 
 }
 

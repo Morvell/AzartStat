@@ -57,14 +57,11 @@ public class ListViewAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
 
-
-
         LayoutInflater inflater=activity.getLayoutInflater();
 
         if(convertView == null){
 
             convertView=inflater.inflate(R.layout.colmn_row, null);
-
 
             txtFirst=(TextView) convertView.findViewById(R.id.namber);
             txtSecond=(TextView) convertView.findViewById(R.id.date);

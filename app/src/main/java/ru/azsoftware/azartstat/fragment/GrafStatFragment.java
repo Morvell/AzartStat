@@ -1,6 +1,5 @@
 package ru.azsoftware.azartstat.fragment;
 
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -28,17 +27,11 @@ import ru.azsoftware.azartstat.data.BetDBHelper;
 
 import static android.R.attr.format;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class GrafStatFragment extends Fragment {
 
     SQLiteDatabase db;
 
-
-    public GrafStatFragment() {
-        // Required empty public constructor
-    }
+    public GrafStatFragment() { }
 
 
     @Override
@@ -51,13 +44,6 @@ public class GrafStatFragment extends Fragment {
 
         GraphView graph = (GraphView) view.findViewById(R.id.graph);
 
-        Calendar calendar = Calendar.getInstance();
-        Date d1 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d2 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d3 = calendar.getTime();
-
         LineGraphSeries<DataPoint> series = null;
         try {
             series = new LineGraphSeries<>(DataPointGenerat());
@@ -65,14 +51,7 @@ public class GrafStatFragment extends Fragment {
             e.printStackTrace();
         }
 
-        
-
         graph.addSeries(series);
-
-
-
-
-
 
         return view;
     }
@@ -84,21 +63,14 @@ public class GrafStatFragment extends Fragment {
 
         Cursor cursor = db.rawQuery(query,null);
         int bank = 0;
-        String date = "";
-
         int count = cursor.getCount();
         DataPoint[] values = new DataPoint[count];
 
         int i = 0;
 
-
         while (cursor.moveToNext()) {
-            date = cursor.getString(cursor
-                    .getColumnIndex(BetContract.BetEntry.COLUMN_DATE));
             bank = cursor.getInt(cursor
                     .getColumnIndex(BetContract.BetEntry.COLUMN_BANK));
-
-
             DataPoint v = new DataPoint(i+1, bank);
             values[i] = v;
             i+=1;

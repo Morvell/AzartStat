@@ -45,7 +45,6 @@ public class SettingsActivity extends AppCompatActivity {
             editTextEditBank.setText(String.valueOf(bank));
         } catch (Exception e) {}
 
-
         buttonEditBank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +54,6 @@ public class SettingsActivity extends AppCompatActivity {
                 editor.apply();
             }
         });
-
 
         buttonDeleteDB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,10 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-
-
         mDbHelper = new BetDBHelper(this);
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

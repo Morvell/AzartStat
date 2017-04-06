@@ -13,7 +13,7 @@
         android:ems="10"
         android:inputType="date"
         android:layout_below="@+id/textView3"
-        android:layout_alignStart="@+id/editTextSum" />
+        android:layout_alignStart="@+id/editTextBankOrProfitUp" />
 
     <Button
         android:id="@+id/buttonToday"
@@ -35,7 +35,7 @@
         android:text="Введите данные за день" />
 
     <EditText
-        android:id="@+id/editTextSum"
+        android:id="@+id/editTextBankOrProfitUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextDate"
@@ -73,12 +73,12 @@
         android:layout_height="wrap_content"
         android:text="Внести данные "
         android:visibility="invisible"
-        android:layout_below="@+id/editTextBank"
+        android:layout_below="@+id/editTextBankOrProfitDown"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp" />
 
     <EditText
-        android:id="@+id/editTextBank"
+        android:id="@+id/editTextBankOrProfitDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
@@ -87,7 +87,7 @@
         android:inputType="number"
         android:layout_marginTop="14dp"
         android:layout_below="@+id/textViewBankOrProfit"
-        android:layout_alignStart="@+id/editTextSum" />
+        android:layout_alignStart="@+id/editTextBankOrProfitUp" />
 
     <TextView
         android:id="@+id/textViewBankOrProfit"
@@ -102,7 +102,7 @@
         android:id="@+id/buttonNext"
         android:layout_width="100dp"
         android:layout_height="32dp"
-        android:layout_below="@+id/editTextSum"
+        android:layout_below="@+id/editTextBankOrProfitUp"
         android:layout_centerHorizontal="true"
         android:text="продолжить"
         android:textSize="10dp" />

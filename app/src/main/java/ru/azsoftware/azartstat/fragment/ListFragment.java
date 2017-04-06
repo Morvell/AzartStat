@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 import ru.azsoftware.azartstat.ListViewAdapter;
 import ru.azsoftware.azartstat.R;
-import ru.azsoftware.azartstat.data.BetContract;
+import ru.azsoftware.azartstat.data.BetContract.BetEntry;
 import ru.azsoftware.azartstat.data.BetDBHelper;
 
 import static ru.azsoftware.azartstat.Constants.FIRST_COLUMN;
@@ -26,31 +26,21 @@ import static ru.azsoftware.azartstat.Constants.FOURTH_COLUMN;
 import static ru.azsoftware.azartstat.Constants.SECOND_COLUMN;
 import static ru.azsoftware.azartstat.Constants.THIRD_COLUMN;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ListFragment extends Fragment {
 
     private ArrayList<HashMap<String, String>> list;
     SQLiteDatabase db;
 
-    public ListFragment() {
-        // Required empty public constructor
-    }
-
+    public ListFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-
 
         ListView listView = (ListView) view.findViewById(R.id.listView1);
 
         list = DateGenerat();
-
-
 
         ListViewAdapter adapter = new ListViewAdapter(getActivity(), list);
         listView.setAdapter(adapter);
@@ -63,7 +53,8 @@ public class ListFragment extends Fragment {
             }
 
         });
-    return view;
+
+        return view;
     }
 
     public ArrayList<HashMap<String, String>> DateGenerat() {
@@ -71,29 +62,25 @@ public class ListFragment extends Fragment {
         BetDBHelper betDBHelper = new BetDBHelper(getActivity());
         db = betDBHelper.getWritableDatabase();
 
-        String query = "SELECT " + BetContract.BetEntry.COLUMN_DATE+", "+ BetContract.BetEntry.COLUMN_BANK+", "+ BetContract.BetEntry.COLUMN_PROFIT
-                +" FROM " + BetContract.BetEntry.TABLE_NAME +" ORDER BY " + BetContract.BetEntry.COLUMN_REVERT_DATE + " DESC";
+        String query = "SELECT " + BetEntry.COLUMN_DATE+", " + BetEntry.COLUMN_BANK + ", " + BetEntry.COLUMN_PROFIT
+                     + " FROM " + BetEntry.TABLE_NAME + " ORDER BY " + BetEntry.COLUMN_REVERT_DATE + " DESC";
 
         Cursor cursor = db.rawQuery(query,null);
         int bank = 0;
         String date = "";
         int profit = 0;
 
-        int count = cursor.getCount();
         ArrayList<HashMap<String, String>> list2 = new ArrayList<>();
 
         int i = 0;
 
-
         while (cursor.moveToNext()) {
             date = cursor.getString(cursor
-                    .getColumnIndex(BetContract.BetEntry.COLUMN_DATE));
+                    .getColumnIndex(BetEntry.COLUMN_DATE));
             profit = cursor.getInt(cursor
-                    .getColumnIndex(BetContract.BetEntry.COLUMN_PROFIT));
+                    .getColumnIndex(BetEntry.COLUMN_PROFIT));
             bank = cursor.getInt(cursor
-                    .getColumnIndex(BetContract.BetEntry.COLUMN_BANK));
-
-
+                    .getColumnIndex(BetEntry.COLUMN_BANK));
 
             HashMap<String, String> temp = new HashMap<>();
             temp.put(FIRST_COLUMN, String.valueOf(i+1));
