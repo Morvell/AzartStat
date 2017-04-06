@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.app.DialogFragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -17,16 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 
 import ru.azsoftware.azartstat.R;
 import ru.azsoftware.azartstat.data.BetContract;
 import ru.azsoftware.azartstat.data.BetDBHelper;
-import ru.azsoftware.azartstat.data.BetContract.BetEntry;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +36,8 @@ public class MainFragment extends Fragment {
 
     EditText editTextDate, editTextProfit, editTextBank;
     Button buttonToday, buttonYesterday, buttonSave, buttonNext;
-    TextView textViewBank;
+    TextView textViewBankOrProfit;
+    Spinner spinner;
 
     SQLiteDatabase db;
 
@@ -75,20 +76,36 @@ public class MainFragment extends Fragment {
         buttonYesterday = (Button) view.findViewById(R.id.buttonYesterday);
         buttonSave = (Button) view.findViewById(R.id.buttonSave);
         buttonNext = (Button) view.findViewById(R.id.buttonNext);
-        textViewBank = (TextView) view.findViewById(R.id.textViewBank);
+        textViewBankOrProfit = (TextView) view.findViewById(R.id.textViewBankOrProfit);
+        spinner = (Spinner) view.findViewById(R.id.spinner);
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                textViewBank.setVisibility(View.VISIBLE);
+                textViewBankOrProfit.setVisibility(View.VISIBLE);
                 editTextBank.setVisibility(View.VISIBLE);
                 buttonSave.setVisibility(View.VISIBLE);
                 buttonNext.setVisibility(View.INVISIBLE);
-                int bank = 0;
-                try{ bank = mSettings.getInt(APP_PREFERENCES_BANK,0);}catch (Exception e) {}
-                bank += Integer.valueOf(editTextProfit.getText().toString());
-                editTextBank.setText(String.valueOf(bank));
+
+                String variant = spinner.getSelectedItem().toString();
+
+                if (Objects.equals(variant, "Прибыль")) {
+
+                    textViewBankOrProfit.setText("Банк");
+                    int bank = 0;
+                    try{ bank = mSettings.getInt(APP_PREFERENCES_BANK,0);}catch (Exception e) {}
+                    bank += Integer.valueOf(editTextProfit.getText().toString());
+                    editTextBank.setText(String.valueOf(bank));
+                } else {
+                    textViewBankOrProfit.setText("Прибыль");
+                    int bank = 0;
+                    int profit = 0;
+                    try{ bank = mSettings.getInt(APP_PREFERENCES_BANK,0);}catch (Exception e) {}
+                    profit = Integer.valueOf(editTextProfit.getText().toString()) - bank;
+                    editTextBank.setText(String.valueOf(profit));
+                }
+
             }
         });
 
@@ -148,7 +165,12 @@ public class MainFragment extends Fragment {
         int profit = Integer.parseInt(editTextProfit.getText().toString());
         int bank = Integer.parseInt(editTextBank.getText().toString());
         ContentValues values = new ContentValues();
+        String day, month, age;
+        day = date.split("[.]")[0];
+        month = date.split("[.]")[1];
+        age = date.split("[.]")[2];
         values.put(BetContract.BetEntry.COLUMN_DATE, date);
+        values.put(BetContract.BetEntry.COLUMN_REVERT_DATE, age + "." + month + "." + day);
         values.put(BetContract.BetEntry.COLUMN_BANK, bank);
         values.put(BetContract.BetEntry.COLUMN_PROFIT, profit);
 

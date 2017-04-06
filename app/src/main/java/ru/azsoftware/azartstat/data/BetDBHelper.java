@@ -24,6 +24,7 @@ public class BetDBHelper extends SQLiteOpenHelper {
         String SQL_CREATE_GUESTS_TABLE = "CREATE TABLE " + BetEntry.TABLE_NAME + " ("
 
                 + BetEntry.COLUMN_DATE + " TEXT PRIMARY KEY NOT NULL, "
+                + BetEntry.COLUMN_REVERT_DATE + " TEXT NOT NULL DEFAULT 0, "
                 + BetEntry.COLUMN_PROFIT + " INTEGER NOT NULL DEFAULT 0, "
                 + BetEntry.COLUMN_BANK + " INTEGER NOT NULL DEFAULT 0);";
 
@@ -33,6 +34,8 @@ public class BetDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+
 
     }
 

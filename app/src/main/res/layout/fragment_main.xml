@@ -46,13 +46,16 @@
         android:text="0"
         android:textAlignment="center" />
 
-    <TextView
+    <Spinner
+        android:id="@+id/spinner"
+        android:entries="@array/variantlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editTextSum"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="58dp"
-        android:text="Сумма" />
+        android:textAlignment="center"
+        android:layout_marginTop="41dp"
+        android:layout_below="@+id/buttonToday"
+        android:layout_alignStart="@+id/buttonNext"
+        android:layout_marginStart="8dp" />
 
     <Button
         android:id="@+id/buttonYesterday"
@@ -83,11 +86,11 @@
         android:ems="10"
         android:inputType="number"
         android:layout_marginTop="14dp"
-        android:layout_below="@+id/textViewBank"
+        android:layout_below="@+id/textViewBankOrProfit"
         android:layout_alignStart="@+id/editTextSum" />
 
     <TextView
-        android:id="@+id/textViewBank"
+        android:id="@+id/textViewBankOrProfit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Банк"

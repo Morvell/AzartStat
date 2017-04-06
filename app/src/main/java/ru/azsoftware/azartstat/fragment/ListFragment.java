@@ -72,7 +72,7 @@ public class ListFragment extends Fragment {
         db = betDBHelper.getWritableDatabase();
 
         String query = "SELECT " + BetContract.BetEntry.COLUMN_DATE+", "+ BetContract.BetEntry.COLUMN_BANK+", "+ BetContract.BetEntry.COLUMN_PROFIT
-                +" FROM " + BetContract.BetEntry.TABLE_NAME +" ORDER BY " + BetContract.BetEntry.COLUMN_DATE + " DESC";
+                +" FROM " + BetContract.BetEntry.TABLE_NAME +" ORDER BY " + BetContract.BetEntry.COLUMN_REVERT_DATE + " DESC";
 
         Cursor cursor = db.rawQuery(query,null);
         int bank = 0;

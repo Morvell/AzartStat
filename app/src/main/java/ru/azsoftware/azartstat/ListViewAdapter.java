@@ -65,6 +65,7 @@ public class ListViewAdapter extends BaseAdapter{
 
             convertView=inflater.inflate(R.layout.colmn_row, null);
 
+
             txtFirst=(TextView) convertView.findViewById(R.id.namber);
             txtSecond=(TextView) convertView.findViewById(R.id.date);
             txtThird=(TextView) convertView.findViewById(R.id.profit);
