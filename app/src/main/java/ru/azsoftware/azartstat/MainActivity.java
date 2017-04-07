@@ -1,6 +1,8 @@
 package ru.azsoftware.azartstat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import ru.azsoftware.azartstat.fragment.AboutProgramFragment;
 import ru.azsoftware.azartstat.fragment.GrafStatFragment;
@@ -20,6 +24,13 @@ import ru.azsoftware.azartstat.fragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    TextView hat;
+
+    private SharedPreferences mSettings;
+
+    public static final String APP_PREFERENCES = "mysettings";
+    public static final String APP_PREFERENCES_BANK = "bank";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +45,13 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         Fragment fragment = null;
-        Class fragmentClass;
-
-        fragmentClass = MainFragment.class;
+        Class fragmentClass = MainFragment.class;
 
         try {
             fragment = (Fragment) fragmentClass.newInstance();

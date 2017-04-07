@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -140,8 +139,15 @@ public class MainFragment extends Fragment {
     private void insertDate() {
 
         String date = editTextDate.getText().toString();
-        int profit = Integer.parseInt(editTextBankOrProfitUp.getText().toString());
-        int bank = Integer.parseInt(editTextBankOrProfitDown.getText().toString());
+        int profit, bank;
+        if (Objects.equals(spinner.getSelectedItem().toString(), "Банк")) {
+
+            bank = Integer.parseInt(editTextBankOrProfitUp.getText().toString());
+            profit = Integer.parseInt(editTextBankOrProfitDown.getText().toString());
+        } else {
+            profit = Integer.parseInt(editTextBankOrProfitUp.getText().toString());
+            bank = Integer.parseInt(editTextBankOrProfitDown.getText().toString());
+        }
         ContentValues values = new ContentValues();
         String day, month, age;
         String[] splitDate = date.split("[.]");
@@ -174,59 +180,40 @@ public class MainFragment extends Fragment {
         builder.setMessage("Данные за этот день уже были заведены ранее. Заменить данные?");
         builder.setPositiveButton("Да", UpdateDB);
         builder.setNegativeButton("Нет", null);
-        builder.setNeutralButton("Суммировать", ChangeDB);
         builder.show();
     }
 
     DialogInterface.OnClickListener UpdateDB = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
+
+            int profit, bank;
+            if (Objects.equals(spinner.getSelectedItem().toString(), "Банк")) {
+
+                bank = Integer.parseInt(editTextBankOrProfitUp.getText().toString());
+                profit = Integer.parseInt(editTextBankOrProfitDown.getText().toString());
+            } else {
+                profit = Integer.parseInt(editTextBankOrProfitUp.getText().toString());
+                bank = Integer.parseInt(editTextBankOrProfitDown.getText().toString());
+            }
+
             ContentValues values = new ContentValues();
-            values.put(BetEntry.COLUMN_PROFIT, Integer.valueOf(editTextBankOrProfitUp.getText().toString()));
-            values.put(BetEntry.COLUMN_BANK, Integer.valueOf(editTextBankOrProfitDown.getText().toString()));
+            values.put(BetEntry.COLUMN_PROFIT, profit);
+            values.put(BetEntry.COLUMN_BANK, bank);
 
             db.update(BetEntry.TABLE_NAME,
                     values,
                     BetEntry.COLUMN_DATE + "= ?", new String[]{editTextDate.getText().toString()});
 
             SharedPreferences.Editor editor = mSettings.edit();
-            editor.putInt(APP_PREFERENCES_BANK,Integer.valueOf(editTextBankOrProfitDown.getText().toString()));
+            editor.putInt(APP_PREFERENCES_BANK, bank);
             editor.apply();
             Toast.makeText(getActivity(), "Данные заменены.", Toast.LENGTH_SHORT).show();
 
         }
     };
 
-    DialogInterface.OnClickListener ChangeDB = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            ContentValues values = new ContentValues();
-            String query = "SELECT " + BetEntry.COLUMN_PROFIT+", "+ BetEntry.COLUMN_BANK
-                         +" FROM " + BetEntry.TABLE_NAME
-                         +" WHERE "+ BetEntry.COLUMN_DATE+"="+editTextDate.getText().toString();
-            Cursor cursor = db.rawQuery(query,null);
-            int profit =0, bank = 0;
-            while (cursor.moveToNext()) {
-                profit = cursor.getInt(cursor
-                        .getColumnIndex(BetEntry.COLUMN_PROFIT));
-                bank = cursor.getInt(cursor
-                        .getColumnIndex(BetEntry.COLUMN_BANK));
-            }
 
-            values.put(BetEntry.COLUMN_PROFIT, Integer.valueOf(editTextBankOrProfitUp.getText().toString()) + profit);
-            values.put(BetEntry.COLUMN_BANK, bank + profit);
-
-            db.update(BetEntry.TABLE_NAME,
-                    values,
-                    BetEntry.COLUMN_DATE + "= ?", new String[]{editTextDate.getText().toString()});
-
-            SharedPreferences.Editor editor = mSettings.edit();
-            editor.putInt(APP_PREFERENCES_BANK, bank + profit);
-            editor.apply();
-            cursor.close();
-            Toast.makeText(getActivity(), "Данные суммированы.", Toast.LENGTH_SHORT).show();
-        }
-    };
 
 }
 
