@@ -41,7 +41,6 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:text="0"
         android:textAlignment="center"
         android:layout_below="@+id/TextViewBank"
         android:layout_centerHorizontal="true" />
@@ -98,9 +97,11 @@
     <Button
         android:id="@+id/search"
         android:layout_width="30dp"
-        android:layout_height="40dp"
-        android:layout_alignTop="@+id/editTextDate"
-        android:layout_toEndOf="@+id/editTextDate"
-        android:layout_marginStart="11dp" />
+        android:layout_height="30dp"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/ic_search"
+        android:layout_alignBaseline="@+id/editTextDate"
+        android:layout_alignBottom="@+id/editTextDate"
+        android:layout_toEndOf="@+id/editTextDate" />
 
 </RelativeLayout>
