@@ -75,7 +75,7 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
 
                 String date = editTextDate.getText().toString();
-                
+
                 String selection = BetEntry.COLUMN_DATE + "= ?";
                 String[] selectionArgs = {date};
 
@@ -131,7 +131,15 @@ public class MainFragment extends Fragment {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertDate();
+                String date = editTextBank.getText().toString();
+                String profit = editTextProfit.getText().toString();
+                if (Objects.equals(date, "") | Objects.equals(profit, ""))
+                {
+                    Toast.makeText(getActivity(), "Заполните поля  для данных", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    insertDate();
+                }
             }
         });
 
