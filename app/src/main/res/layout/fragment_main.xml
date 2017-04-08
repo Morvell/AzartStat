@@ -13,7 +13,7 @@
         android:ems="10"
         android:inputType="date"
         android:layout_below="@+id/textView3"
-        android:layout_alignStart="@+id/editTextBankOrProfitUp" />
+        android:layout_alignStart="@+id/editTextBank" />
 
     <Button
         android:id="@+id/buttonToday"
@@ -35,27 +35,26 @@
         android:text="Введите данные за день" />
 
     <EditText
-        android:id="@+id/editTextBankOrProfitUp"
+        android:id="@+id/editTextBank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextDate"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:text="0"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:layout_below="@+id/TextViewBank"
+        android:layout_centerHorizontal="true" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:entries="@array/variantlist"
+    <TextView
+        android:id="@+id/TextViewBank"
+        android:text="Банк"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="38dp"
         android:layout_below="@+id/buttonToday"
-        android:layout_alignStart="@+id/buttonNext"
-        android:layout_marginStart="8dp" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/buttonYesterday"
@@ -72,38 +71,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Внести данные "
-        android:visibility="invisible"
-        android:layout_below="@+id/editTextBankOrProfitDown"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="39dp"
+        android:layout_below="@+id/editTextProfit"
+        android:layout_centerHorizontal="true" />
 
     <EditText
-        android:id="@+id/editTextBankOrProfitDown"
+        android:id="@+id/editTextProfit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         android:textAlignment="center"
         android:ems="10"
         android:inputType="number"
-        android:layout_marginTop="14dp"
-        android:layout_below="@+id/textViewBankOrProfit"
-        android:layout_alignStart="@+id/editTextBankOrProfitUp" />
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/textViewProfit"
+        android:layout_alignStart="@+id/editTextBank" />
 
     <TextView
-        android:id="@+id/textViewBankOrProfit"
+        android:id="@+id/textViewProfit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Банк"
-        android:visibility="invisible"
-        android:layout_below="@+id/buttonNext"
+        android:text="Прибыль"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/editTextBank"
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:id="@+id/buttonNext"
-        android:layout_width="100dp"
-        android:layout_height="32dp"
-        android:layout_below="@+id/editTextBankOrProfitUp"
-        android:layout_centerHorizontal="true"
-        android:text="продолжить"
-        android:textSize="10dp" />
+        android:id="@+id/search"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/editTextDate"
+        android:layout_toEndOf="@+id/editTextDate"
+        android:layout_marginStart="11dp" />
+
 </RelativeLayout>

@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,24 +15,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Objects;
 
 import ru.azsoftware.azartstat.R;
+import ru.azsoftware.azartstat.data.BetContract;
 import ru.azsoftware.azartstat.data.BetContract.BetEntry;
 import ru.azsoftware.azartstat.data.BetDBHelper;
 
+import static ru.azsoftware.azartstat.Constants.FIRST_COLUMN;
+import static ru.azsoftware.azartstat.Constants.FOURTH_COLUMN;
+import static ru.azsoftware.azartstat.Constants.SECOND_COLUMN;
+import static ru.azsoftware.azartstat.Constants.THIRD_COLUMN;
+
 public class MainFragment extends Fragment {
 
-    EditText editTextDate, editTextBankOrProfitUp, editTextBankOrProfitDown;
-    Button buttonToday, buttonYesterday, buttonSave, buttonNext;
-    TextView textViewBankOrProfit;
-    Spinner spinner;
+    EditText editTextDate, editTextBank, editTextProfit;
+    Button buttonToday, buttonYesterday, buttonSave;
+    Button search;
 
     SQLiteDatabase db;
 
@@ -54,44 +63,47 @@ public class MainFragment extends Fragment {
         mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         editTextDate = (EditText) view.findViewById(R.id.editTextDate);
-        editTextBankOrProfitUp = (EditText) view.findViewById(R.id.editTextBankOrProfitUp);
-        editTextBankOrProfitDown = (EditText) view.findViewById(R.id.editTextBankOrProfitDown);
+        editTextBank = (EditText) view.findViewById(R.id.editTextBank);
+        editTextProfit = (EditText) view.findViewById(R.id.editTextProfit);
         buttonToday = (Button) view.findViewById(R.id.buttonToday);
         buttonYesterday = (Button) view.findViewById(R.id.buttonYesterday);
         buttonSave = (Button) view.findViewById(R.id.buttonSave);
-        buttonNext = (Button) view.findViewById(R.id.buttonNext);
-        textViewBankOrProfit = (TextView) view.findViewById(R.id.textViewBankOrProfit);
-        spinner = (Spinner) view.findViewById(R.id.spinner);
+        search = (Button) view.findViewById(R.id.search);
 
-        buttonNext.setOnClickListener(new View.OnClickListener() {
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                textViewBankOrProfit.setVisibility(View.VISIBLE);
-                editTextBankOrProfitDown.setVisibility(View.VISIBLE);
-                buttonSave.setVisibility(View.VISIBLE);
-                buttonNext.setVisibility(View.INVISIBLE);
+                String date = editTextDate.getText().toString();
+                
+                String selection = BetEntry.COLUMN_DATE + "= ?";
+                String[] selectionArgs = {date};
 
-                String variant = spinner.getSelectedItem().toString();
+                String query = "SELECT " + BetEntry.COLUMN_BANK + ", " + BetEntry.COLUMN_PROFIT
+                        + " FROM " + BetEntry.TABLE_NAME + " WHERE " +selection ;
 
-                if (Objects.equals(variant, "Прибыль")) {
+                Cursor cursor = db.rawQuery(query, selectionArgs );
 
-                    textViewBankOrProfit.setText("Банк");
-                    int bank = 0;
-                    try{ bank = mSettings.getInt(APP_PREFERENCES_BANK,0);}catch (Exception e) {}
-                    bank += Integer.valueOf(editTextBankOrProfitUp.getText().toString());
-                    editTextBankOrProfitDown.setText(String.valueOf(bank));
-                } else {
-                    textViewBankOrProfit.setText("Прибыль");
-                    int bank = 0;
-                    int profit = 0;
-                    try{ bank = mSettings.getInt(APP_PREFERENCES_BANK,0);}catch (Exception e) {}
-                    profit = Integer.valueOf(editTextBankOrProfitUp.getText().toString()) - bank;
-                    editTextBankOrProfitDown.setText(String.valueOf(profit));
+                int profit, bank;
+
+                if (cursor.moveToNext()) {
+                    profit = cursor.getInt(cursor
+                            .getColumnIndex(BetEntry.COLUMN_PROFIT));
+                    bank = cursor.getInt(cursor
+                            .getColumnIndex(BetEntry.COLUMN_BANK));
+
+                    editTextBank.setText(String.valueOf(bank));
+                    editTextProfit.setText(String.valueOf(profit));
+                }
+                else {
+                    Toast.makeText(getActivity(), "Данных за этот день не найдено",Toast.LENGTH_SHORT).show();
                 }
 
+                cursor.close();
             }
         });
+
+
 
         buttonToday.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,14 +151,10 @@ public class MainFragment extends Fragment {
 
         String date = editTextDate.getText().toString();
         int profit, bank;
-        if (Objects.equals(spinner.getSelectedItem().toString(), "Банк")) {
 
-            bank = Integer.parseInt(editTextBankOrProfitUp.getText().toString());
-            profit = Integer.parseInt(editTextBankOrProfitDown.getText().toString());
-        } else {
-            profit = Integer.parseInt(editTextBankOrProfitUp.getText().toString());
-            bank = Integer.parseInt(editTextBankOrProfitDown.getText().toString());
-        }
+        bank = Integer.parseInt(editTextBank.getText().toString());
+        profit = Integer.parseInt(editTextProfit.getText().toString());
+
         ContentValues values = new ContentValues();
         String day, month, age;
         String[] splitDate = date.split("[.]");
@@ -187,14 +195,9 @@ public class MainFragment extends Fragment {
         public void onClick(DialogInterface dialog, int which) {
 
             int profit, bank;
-            if (Objects.equals(spinner.getSelectedItem().toString(), "Банк")) {
 
-                bank = Integer.parseInt(editTextBankOrProfitUp.getText().toString());
-                profit = Integer.parseInt(editTextBankOrProfitDown.getText().toString());
-            } else {
-                profit = Integer.parseInt(editTextBankOrProfitUp.getText().toString());
-                bank = Integer.parseInt(editTextBankOrProfitDown.getText().toString());
-            }
+            bank = Integer.parseInt(editTextBank.getText().toString());
+            profit = Integer.parseInt(editTextProfit.getText().toString());
 
             ContentValues values = new ContentValues();
             values.put(BetEntry.COLUMN_PROFIT, profit);
