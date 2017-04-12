@@ -22,6 +22,7 @@ import ru.azsoftware.azartstat.fragment.AboutProgramFragment;
 import ru.azsoftware.azartstat.fragment.GrafStatFragment;
 import ru.azsoftware.azartstat.fragment.ListFragment;
 import ru.azsoftware.azartstat.fragment.MainFragment;
+import ru.azsoftware.azartstat.fragment.SimpleStatFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -135,6 +136,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_all_data){
 
             fragmentClass = ListFragment.class;
+
+        } else if (id == R.id.nav_stat){
+
+            fragmentClass = SimpleStatFragment.class;
 
         } else if (id == R.id.nav_graf_statistic){
 

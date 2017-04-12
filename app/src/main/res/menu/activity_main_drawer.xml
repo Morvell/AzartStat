@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_all_data"
             android:title="Данные"/>
         <item
+            android:id="@+id/nav_stat"
+            android:icon="@drawable/ic_statistic"
+            android:title="Статистика"/>
+        <item
             android:id="@+id/nav_graf_statistic"
             android:icon="@drawable/ic_statistic"
             android:title="График"/>

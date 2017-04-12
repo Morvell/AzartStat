@@ -4,14 +4,133 @@
     android:layout_height="match_parent"
     tools:context="ru.azsoftware.azartstat.fragment.SimpleStatFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:id="@+id/multiline"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:ems="10" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:text="Банк" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:text="Максимальный банк" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:text="Минимальный банк" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView"
+        android:layout_below="@+id/textView5"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:text="Средняя прибыль" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView9"
+        android:layout_below="@+id/textView9"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:text="Максимальная прибыль" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Минимальная прибыль"
+        android:layout_below="@+id/textView10"
+        android:textSize="18sp"
+        android:layout_alignStart="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView10"
+        android:layout_below="@+id/textView11"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:text="Ожидаемы доход за месяц" />
+
+    <TextView
+        android:id="@+id/textViewBankStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/textViewMaxBankStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignEnd="@+id/textViewBankStat"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/textViewMinBankStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignStart="@+id/textViewMaxBankStat"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/textViewAverageProfitStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView9"
+        android:layout_alignEnd="@+id/textViewMinBankStat"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/textViewMaxProfitStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView10"
+        android:layout_alignEnd="@+id/textViewAverageProfitStat"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/textViewMinProfitStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView12"
+        android:layout_alignStart="@+id/textViewMaxProfitStat"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/textViewExpectedProfitStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:layout_alignBottom="@+id/textView12"
+        android:layout_alignStart="@+id/textViewMinProfitStat" />
 </RelativeLayout>
