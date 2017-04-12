@@ -48,6 +48,7 @@ public class MainFragment extends Fragment {
 
     public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_BANK = "bank";
+    public static final String APP_PREFERENCES_DATE = "date";
 
     public MainFragment() { }
 
@@ -184,8 +185,18 @@ public class MainFragment extends Fragment {
 
         } else {
             Toast.makeText(getActivity(), "Данные за " + date + " заведёны", Toast.LENGTH_SHORT).show();
+            changeBank(-1);
+        }
+    }
+
+    private void changeBank(int comparer) {
+        int bank = Integer.parseInt(editTextBank.getText().toString());
+        String date = editTextDate.getText().toString();
+        String lastDate = mSettings.getString(APP_PREFERENCES_DATE, "0");
+        if (lastDate.compareTo(date) == comparer){
             SharedPreferences.Editor editor = mSettings.edit();
-            editor.putInt(APP_PREFERENCES_BANK,bank);
+            editor.putInt(APP_PREFERENCES_BANK, bank);
+            editor.putString(APP_PREFERENCES_DATE, date);
             editor.apply();
         }
     }
@@ -215,9 +226,8 @@ public class MainFragment extends Fragment {
                     values,
                     BetEntry.COLUMN_DATE + "= ?", new String[]{editTextDate.getText().toString()});
 
-            SharedPreferences.Editor editor = mSettings.edit();
-            editor.putInt(APP_PREFERENCES_BANK, bank);
-            editor.apply();
+            changeBank(0);
+
             Toast.makeText(getActivity(), "Данные заменены.", Toast.LENGTH_SHORT).show();
 
         }
