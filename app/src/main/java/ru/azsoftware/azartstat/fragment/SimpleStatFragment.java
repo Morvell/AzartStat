@@ -32,7 +32,7 @@ import static ru.azsoftware.azartstat.Constants.THIRD_COLUMN;
  */
 public class SimpleStatFragment extends Fragment  {
 
-    TextView textViewBank, textViewMaxBank, textViewMinBank,
+    TextView textViewBank, textViewMaxBank, textViewMinBank, textViewFivePercent,
             textViewAverageProfit, textViewMaxProfit, textViewMinProfit, textViewExpectedProfit;
     SQLiteDatabase db;
 
@@ -58,6 +58,7 @@ public class SimpleStatFragment extends Fragment  {
         textViewMaxProfit = (TextView) view.findViewById(R.id.textViewMaxProfitStat);
         textViewMinProfit = (TextView) view.findViewById(R.id.textViewMinProfitStat);
         textViewExpectedProfit = (TextView) view.findViewById(R.id.textViewExpectedProfitStat);
+        textViewFivePercent = (TextView) view.findViewById(R.id.textVievFivePercent);
 
 
         String query = "SELECT " + BetContract.BetEntry.COLUMN_BANK + ", " + BetContract.BetEntry.COLUMN_PROFIT
@@ -89,6 +90,7 @@ public class SimpleStatFragment extends Fragment  {
 
         cursor.moveToFirst();
         textViewBank.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex(BetContract.BetEntry.COLUMN_BANK))));
+        textViewFivePercent.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex(BetContract.BetEntry.COLUMN_BANK)) * 0.05));
         textViewMaxBank.setText(String.valueOf(maxBank));
         textViewMinBank.setText(String.valueOf(minBank));
         textViewAverageProfit.setText(String.valueOf(profit/cursor.getCount()));
