@@ -40,7 +40,7 @@ public class MainFragment extends Fragment {
 
     EditText editTextDate, editTextBank, editTextProfit;
     Button buttonToday, buttonYesterday, buttonSave;
-    Button search;
+    Button search, changeProfit;
 
     SQLiteDatabase db;
 
@@ -70,6 +70,16 @@ public class MainFragment extends Fragment {
         buttonYesterday = (Button) view.findViewById(R.id.buttonYesterday);
         buttonSave = (Button) view.findViewById(R.id.buttonSave);
         search = (Button) view.findViewById(R.id.search);
+        changeProfit = (Button) view.findViewById(R.id.change_profit);
+
+        changeProfit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int lastBank = mSettings.getInt(APP_PREFERENCES_BANK, 0 );
+                int currentBank = Integer.valueOf(editTextBank.getText().toString());
+                editTextProfit.setText(String.valueOf(currentBank - lastBank));
+            }
+        });
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override

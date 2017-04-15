@@ -54,6 +54,14 @@ public class ListFragment extends Fragment {
 
         });
 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(), "Oppa", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         return view;
     }
 
@@ -90,6 +98,7 @@ public class ListFragment extends Fragment {
             list2.add(temp);
             i+=1;
         }
+
 
         cursor.close();
 
