@@ -27,6 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_BANK = "bank";
+    public static final String APP_PREFERENCES_DATE = "date";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = mSettings.edit();
                 String bank = editTextEditBank.getText().toString();
                 editor.putInt(APP_PREFERENCES_BANK,Integer.valueOf(bank));
+                editor.putString(APP_PREFERENCES_DATE,"0.0.0");
                 editor.apply();
             }
         });
