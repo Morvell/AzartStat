@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity
 
                 View hView =  navigationView.getHeaderView(0);
                 TextView nav_user = (TextView)hView.findViewById(R.id.hat);
+                TextView nav_five_percent = (TextView) hView.findViewById(R.id.nav_header_five_percent);
                 nav_user.setText("Банк: " + bank);
+                nav_five_percent.setText("5% = "+ (int)(bank*0.05));
                 //invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
